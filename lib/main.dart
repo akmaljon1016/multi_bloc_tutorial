@@ -27,19 +27,15 @@ class _MyAppState extends State<MyApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(text),
-
             MaterialButton(
               onPressed: () async {
-                PermissionStatus status = await Permission.camera.status;
+                bool dontAllow =
+                    await Permission.camera.shouldShowRequestRationale;
+                print(dontAllow);
+                PermissionStatus status = await Permission.camera.request();
                 if (status.isGranted) {
-                  setState(() {
-                    text = "Granted";
-                  });
-                } else if (status.isDenied) {
-                  setState(() {
-                    text="Denied";
-                  });
-                  await Permission.camera.request();
+                } else if (status.isPermanentlyDenied && dontAllow==false) {
+                  openAppSettings();
                 }
               },
               color: Colors.green,
