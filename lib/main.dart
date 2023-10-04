@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(text),
+
             MaterialButton(
               onPressed: () async {
                 PermissionStatus status = await Permission.camera.status;
